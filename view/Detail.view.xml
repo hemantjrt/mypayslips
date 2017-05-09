@@ -11,37 +11,32 @@
 						visible="{ path: 'device>/system/phone', formatter: '.formatter.hideInMobile' }"/>
 				</attributes>
 			</ObjectHeader>
-			<!--			<IconTabBar id="iconTabBar" class="sapUiResponsiveContentPadding">
+			<IconTabBar id="iconTabBar" class="sapUiResponsiveContentPadding">
 				<items>
 					<IconTabFilter id="iconTabBarSummary" key="AmtSummary" icon="sap-icon://simple-payment" text="{i18n>detailIconTabBarSumm}">
-						<content>-->
-			<Table id="idPSSummTable" items="{ path: 'localPSModelDet>/AmtSummary/results' }">
-				<headerToolbar>
-					<Toolbar>
-						<Title text="{i18n>detailIconTabBarSumm}" level="H2"/>
-					</Toolbar>
-				</headerToolbar>
-				<columns>
-					<Column width="60%">
-						<Text text="{i18n>paymentType}"/>
-					</Column>
-					<Column width="40%" hAlign="Right">
-						<Text text="{i18n>Amount}"/>
-					</Column>
-				</columns>
-				<items>
-					<ColumnListItem>
-						<cells>
-							<Text
-								text="{parts:[ {path:'localPSModelDet>SumTypeDesc'}, {path:'localPSModelDet>SumTypeDescShrt'}, {path:'device>/system/phone'} ], formatter: '.formatter.formatAmtDesc'}"/>
-							<ObjectIdentifier
-								text="{parts:[ {path:'localPSModelDet>SummEmphasize'}, {path:'localPSModelDet>Amount'} ], formatter: '.formatter.formatText'}"
-								title="{parts:[ {path:'localPSModelDet>SummEmphasize'}, {path:'localPSModelDet>Amount'} ], formatter: '.formatter.formatTitle'}"/>
-						</cells>
-					</ColumnListItem>
-				</items>
-			</Table>
-			<!--</content>
+						<content>
+							<Table id="idPSSummTable" items="{ path: 'localPSModelDet>/AmtSummary/results' }">
+								<columns>
+									<Column width="60%">
+										<Text text="{i18n>paymentType}"/>
+									</Column>
+									<Column width="40%" hAlign="Right">
+										<Text text="{i18n>Amount}"/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem>
+										<cells>
+											<Text
+												text="{parts:[ {path:'localPSModelDet>SumTypeDesc'}, {path:'localPSModelDet>SumTypeDescShrt'}, {path:'device>/system/phone'} ], formatter: '.formatter.formatAmtDesc'}"/>
+											<ObjectIdentifier
+												text="{parts:[ {path:'localPSModelDet>SummEmphasize'}, {path:'localPSModelDet>Amount'} ], formatter: '.formatter.formatText'}"
+												title="{parts:[ {path:'localPSModelDet>SummEmphasize'}, {path:'localPSModelDet>Amount'} ], formatter: '.formatter.formatTitle'}"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</content>
 					</IconTabFilter>
 					<IconTabFilter id="iconTabBarLeave" key="Leave" icon="sap-icon://general-leave-request" text="{i18n>detailIconTabBarLeave}">
 						<content>
@@ -66,7 +61,7 @@
 						</content>
 					</IconTabFilter>
 				</items>
-			</IconTabBar>-->
+			</IconTabBar>
 		</semantic:content>
 		<semantic:customFooterContent>
 			<Button id="BtnFullPS" text="{i18n>openPDF}" tooltip="{i18n>openPDFTooltip}" press="onOpenPDF" type="Emphasized"/>

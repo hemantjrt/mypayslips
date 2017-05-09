@@ -79,7 +79,7 @@ sap.ui.define([
 		 */
 		_onObjectMatched: function(oEvent) {
 			
-			//this.getView().byId("iconTabBar").setSelectedKey("AmtSummary");
+			this.getView().byId("iconTabBar").setSelectedKey("AmtSummary");
 
 			this.locModel = new sap.ui.model.json.JSONModel();
 			this.locModel.setDefaultBindingMode(sap.ui.model.BindingMode.OneWay);

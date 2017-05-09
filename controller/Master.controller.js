@@ -315,7 +315,7 @@ sap.ui.define([
 
 			this.getModel().read(oPath, {
 				urlParameters: {
-					"$expand": "AmtSummary" //,Leaves"
+					"$expand": "AmtSummary,Leaves"
 				},
 				filters: oFilters,
 				sorters: [new sap.ui.model.Sorter("PayDate", true)],
@@ -324,7 +324,7 @@ sap.ui.define([
 					var cnt = oData.results.length;
 
 					for (var i = 0; i < oData.results.length; i++) {
-						cnt = cnt + oData.results[i].AmtSummary.results.length; // + oData.results[i].Leaves.results.length;
+						cnt = cnt + oData.results[i].AmtSummary.results.length + oData.results[i].Leaves.results.length;
 						oData.results[i].PersAssignNum = oData.results[i].PersAssignNum.replace(/^0+/, '');
 					}
 
