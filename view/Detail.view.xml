@@ -1,0 +1,85 @@
+<mvc:View controllerName="qldh.mypayslips.controller.Detail" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic"
+	xmlns:footerbar="sap.ushell.ui.footerbar">
+	<semantic:DetailPage id="page" navButtonPress="onNavBack" showNavButton="{device>/system/phone}"
+		title="{parts:[ {path:'i18n>detailTitle'}, {path:'localPSModelDet>/PersAssignNum'} ]}">
+		<semantic:content>
+			<ObjectHeader id="objectHeader" title="{parts:[ {path:'i18n>PayDate'}, {path:'localPSModelDet>/PayDate', type:'sap.ui.model.type.Date'} ]}"
+				number="{ path: 'localPSModelDet>/NetPay', formatter: '.formatter.currencyValue' }" numberUnit="{i18n>NetPay}">
+				<attributes>
+					<ObjectAttribute title="{i18n>PayPeriod}"
+						text="{parts:[ {path:'localPSModelDet>/PayPerBegin', type:'sap.ui.model.type.Date'}, {path:'localPSModelDet>/PayPerEnd', type:'sap.ui.model.type.Date'} ], formatter: '.formatter.formatPayPeriod'}"
+						visible="{ path: 'device>/system/phone', formatter: '.formatter.hideInMobile' }"/>
+				</attributes>
+			</ObjectHeader>
+			<!--			<IconTabBar id="iconTabBar" class="sapUiResponsiveContentPadding">
+				<items>
+					<IconTabFilter id="iconTabBarSummary" key="AmtSummary" icon="sap-icon://simple-payment" text="{i18n>detailIconTabBarSumm}">
+						<content>-->
+			<Table id="idPSSummTable" items="{ path: 'localPSModelDet>/AmtSummary/results' }">
+				<headerToolbar>
+					<Toolbar>
+						<Title text="{i18n>detailIconTabBarSumm}" level="H2"/>
+					</Toolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="60%">
+						<Text text="{i18n>paymentType}"/>
+					</Column>
+					<Column width="40%" hAlign="Right">
+						<Text text="{i18n>Amount}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<Text
+								text="{parts:[ {path:'localPSModelDet>SumTypeDesc'}, {path:'localPSModelDet>SumTypeDescShrt'}, {path:'device>/system/phone'} ], formatter: '.formatter.formatAmtDesc'}"/>
+							<ObjectIdentifier
+								text="{parts:[ {path:'localPSModelDet>SummEmphasize'}, {path:'localPSModelDet>Amount'} ], formatter: '.formatter.formatText'}"
+								title="{parts:[ {path:'localPSModelDet>SummEmphasize'}, {path:'localPSModelDet>Amount'} ], formatter: '.formatter.formatTitle'}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<!--</content>
+					</IconTabFilter>
+					<IconTabFilter id="iconTabBarLeave" key="Leave" icon="sap-icon://general-leave-request" text="{i18n>detailIconTabBarLeave}">
+						<content>
+							<Table id="idPSLeaveTable" items="{ path: 'localPSModelDet>/Leaves/results' }">
+								<columns>
+									<Column width="60%">
+										<Text text="{i18n>leaveType}"/>
+									</Column>
+									<Column width="40%" hAlign="Right">
+										<Text text="{i18n>Balance}"/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem>
+										<cells>
+											<Text text="{localPSModelDet>LeaveTypeDesc}"/>
+											<Text text="{ path: 'localPSModelDet>LeaveBalance', formatter: '.formatter.currencyValue' }"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</content>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>-->
+		</semantic:content>
+		<semantic:customFooterContent>
+			<Button id="BtnFullPS" text="{i18n>openPDF}" tooltip="{i18n>openPDFTooltip}" press="onOpenPDF" type="Emphasized"/>
+			<Button text="{i18n>payslipHelp}" tooltip="{i18n>openPSHelp}" press="onOpenPSHelp"/>
+		</semantic:customFooterContent>
+		<semantic:sendEmailAction>
+			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
+		</semantic:sendEmailAction>
+		<semantic:shareInJamAction>
+			<semantic:ShareInJamAction id="shareInJam" visible="{FLP>/isShareInJamActive}" press="onShareInJamPress"/>
+		</semantic:shareInJamAction>
+		<semantic:saveAsTileAction>
+			<footerbar:AddBookmarkButton id="shareTile" title="{detailView>/saveAsTileTitle}"/>
+		</semantic:saveAsTileAction>
+	</semantic:DetailPage>
+</mvc:View>

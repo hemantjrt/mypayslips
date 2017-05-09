@@ -1,0 +1,81 @@
+<mvc:View controllerName="qldh.mypayslips.controller.Master" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m"
+	xmlns:semantic="sap.m.semantic" xmlns:f="sap.ui.layout.form">
+	<semantic:MasterPage id="page" title="{masterView>/title}" navButtonPress="onNavBack" showNavButton="true">
+		<!--<semantic:subHeader>
+			<Bar id="headerBar" visible="false">
+				<contentMiddle>
+					<SearchField id="searchField" showRefreshButton="{= !${device>/support/touch} }" tooltip="{i18n>masterSearchTooltip}" width="100%"
+						search="onSearch"></SearchField>
+				</contentMiddle>
+			</Bar>
+		</semantic:subHeader>-->
+		<semantic:content>
+			<PullToRefresh id="pullToRefresh" visible="{device>/support/touch}" refresh="onRefresh"/>
+			<!-- For client side filtering add this to the items attribute:  parameters: {operationMode: 'Client'}}" -->
+			<List id="list" items="{ path: 'localPSModel>/results' }" busyIndicatorDelay="{masterView>/delay}" noDataText="{masterView>/noDataText}"
+				mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}" growing="false" growingScrollToLoad="false"
+				updateFinished="onUpdateFinished" selectionChange="onSelectionChange">
+				<infoToolbar>
+					<Toolbar active="true" id="filterBar" visible="{masterView>/isFilterBarVisible}" press="onOpenViewSettings">
+						<Title id="filterBarLabel" text="{masterView>/filterBarLabel}"/>
+					</Toolbar>
+				</infoToolbar>
+				<items>
+					<ObjectListItem type="{= ${device>/system/phone} ? 'Active' : 'Inactive'}" press="onSelectionChange"
+						intro="PAN: {localPSModel>PersAssignNum}"
+						title="{path:'localPSModel>PayDate', type:'sap.ui.model.type.Date'}"
+						number="{ path: 'localPSModel>NetPay', formatter: '.formatter.currencyValue' }" numberUnit="{i18n>NetPay}">
+						<attributes>
+							<ObjectAttribute text="{parts:[ {path:'localPSModel>PayPerBegin', type:'sap.ui.model.type.Date'}, {path:'localPSModel>PayPerEnd', type:'sap.ui.model.type.Date'} ], formatter: '.formatter.formatPayPeriod'}"
+							                 visible="{ path: 'device>/system/phone', formatter: '.formatter.hideInMobile' }"/>
+						</attributes>
+					</ObjectListItem>
+				</items>
+			</List>
+		</semantic:content>
+		<semantic:sort >
+			<semantic:SortSelect id="sort" selectedKey="{masterView>/sortBy}" change="onSort" visible="false">
+				<core:Item id="masterSort1" key="PayDate" text="{i18n>masterSort1}"/>
+				<core:Item id="masterSort2" key="NetPay" text="{i18n>masterSort2}"/>
+			</semantic:SortSelect>
+		</semantic:sort>
+		<semantic:filter>
+			<semantic:FilterAction id="filter" press="onOpenFilterPayslips"/>
+		</semantic:filter>
+		<semantic:customFooterContent>
+			<Button id="clearFilter" icon="sap-icon://clear-filter" tooltip="{i18n>clearFilterPayslips}" press="onClearFilterPayslips" visible="false" />
+		</semantic:customFooterContent>
+		<semantic:group>
+			<semantic:GroupSelect id="group" selectedKey="{masterView>/groupBy}" change="onGroup" visible="false">
+				<core:Item id="masterGroupNone" key="None" text="{i18n>masterGroupNone}"/>
+				<core:Item id="masterGroup1" key="NetPay" text="{i18n>masterGroup1}"/>
+			</semantic:GroupSelect>
+		</semantic:group>
+		
+		<Dialog id="DlgFilterPayslips" title="{i18n>filterPayslips}" verticalScrolling="false" horizontalScrolling="false" visible="false">
+			<content>
+				<f:SimpleForm editable="false" layout="ResponsiveGridLayout">
+					<f:content>
+						<Label text="{i18n>FilterPAN}" />
+						<Select id="PAN" items="{ path: 'localPanModel>/results' }">
+							<core:Item key="{localPanModel>PersAssignNum}" text="{localPanModel>PersAssignNum}"/>
+						</Select>
+						<Label text="{i18n>FinancialYr}" />
+						<Select id="FinancialYr"  items="{ path: 'localFinYrModel>/results' }" change="onChangeFinYr">
+							<core:Item key="{localFinYrModel>FinYr}" text="{localFinYrModel>FinYr}"/>
+						</Select>
+						<Label text="{i18n>PayDt}"/>
+						<Select id="PayDate"  items="{ path: 'localPayDtModel>/results' }">
+							<core:Item key="{localPayDtModel>PayDate}" text="{path:'localPayDtModel>PayDate', type:'sap.ui.model.type.Date'}"/>
+						</Select>
+					</f:content>
+				</f:SimpleForm>
+			</content>
+			<buttons>
+				<Button text="{i18n>OK}" press="onFiltOk" type="Emphasized"/>
+				<Button text="{i18n>Cancel}" press="onFiltCancel"/>
+			</buttons>
+		</Dialog>
+		
+	</semantic:MasterPage>
+</mvc:View>

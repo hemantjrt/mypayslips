@@ -1,0 +1,147 @@
+<edmx:Edmx
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZHR_PAYSLIP_SRV" xml:lang="en" sap:schema-version="1">
+            <EntityType Name="PaySummary" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PersAssignNum"/>
+                    <PropertyRef Name="SeqNum"/>
+                    <PropertyRef Name="SumType"/>
+                </Key>
+                <Property Name="PersAssignNum" Type="Edm.String" Nullable="false" MaxLength="8" sap:label="Personnel No." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SeqNum" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Sequence Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SumType" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Summary Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SumTypeDesc" Type="Edm.String" MaxLength="50" sap:label="Summary Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Amount" Type="Edm.Decimal" Precision="16" Scale="3" sap:unit="Currency" sap:label="Amount" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Currency" Type="Edm.String" MaxLength="5" sap:label="Currency" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+            </EntityType>
+            <EntityType Name="LeaveBal" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PersAssignNum"/>
+                    <PropertyRef Name="SeqNum"/>
+                    <PropertyRef Name="LeaveType"/>
+                </Key>
+                <Property Name="PersAssignNum" Type="Edm.String" Nullable="false" MaxLength="8" sap:label="Personnel Assignment Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SeqNum" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Sequence Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LeaveType" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Leave Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LeaveTypeDesc" Type="Edm.String" MaxLength="25" sap:label="Leave Type Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LeaveBalance" Type="Edm.Decimal" Precision="10" Scale="5" sap:label="Leave Balance" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="PayPeriods" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PersAssignNum"/>
+                    <PropertyRef Name="SeqNum"/>
+                </Key>
+                <Property Name="PersAssignNum" Type="Edm.String" Nullable="false" MaxLength="8" sap:label="Personnel No." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SeqNum" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Sequence Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PayDate" Type="Edm.DateTime" Precision="7" sap:label="Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PayPerBegin" Type="Edm.DateTime" Precision="7" sap:label="Start date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PayPerEnd" Type="Edm.DateTime" Precision="7" sap:label="End Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NetPay" Type="Edm.Decimal" Precision="16" Scale="3" sap:unit="NetPayCurr" sap:label="Amount" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NetPayCurr" Type="Edm.String" MaxLength="5" sap:label="Currency" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <Property Name="FinancialYr" Type="Edm.String" MaxLength="7" sap:label="Financial Year" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="Leaves" Relationship="ZHR_PAYSLIP_SRV.PayPeriodsToLeaveBals" FromRole="FromRole_PayPeriodsToLeaveBals" ToRole="ToRole_PayPeriodsToLeaveBals"/>
+                <NavigationProperty Name="AmtSummary" Relationship="ZHR_PAYSLIP_SRV.PayPeriodsToPaySummary" FromRole="FromRole_PayPeriodsToPaySummary" ToRole="ToRole_PayPeriodsToPaySummary"/>
+                <NavigationProperty Name="Payslip" Relationship="ZHR_PAYSLIP_SRV.PaystubPDFPaystub" FromRole="FromRole_PaystubPDFPaystub" ToRole="ToRole_PaystubPDFPaystub"/>
+            </EntityType>
+            <EntityType Name="MyPersAssignNum" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PersAssignNum"/>
+                </Key>
+                <Property Name="PersAssignNum" Type="Edm.String" Nullable="false" MaxLength="8" sap:label="Personnel Assignment Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="PayDates" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PayDate"/>
+                </Key>
+                <Property Name="PayDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:label="Pay Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="FinancialYr" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="FinYr"/>
+                </Key>
+                <Property Name="FinYr" Type="Edm.String" Nullable="false" MaxLength="9" sap:label="Financial Year" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="PDFPaystub" m:HasStream="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PersAssignNum"/>
+                    <PropertyRef Name="SeqNum"/>
+                </Key>
+                <Property Name="Title" Type="Edm.String" Nullable="false" sap:label="TITLE" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PersAssignNum" Type="Edm.String" Nullable="false" MaxLength="8" sap:label="Personnel No." sap:creatable="false" sap:updatable="false"/>
+                <Property Name="Contenttype" Type="Edm.String" Nullable="false" sap:label="CONTENTTYPE" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="SeqNum" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Sequence Number" sap:creatable="false" sap:updatable="false"/>
+            </EntityType>
+            <Association Name="PayPeriodsToLeaveBals" sap:content-version="1">
+                <End Type="ZHR_PAYSLIP_SRV.PayPeriods" Multiplicity="*" Role="FromRole_PayPeriodsToLeaveBals"/>
+                <End Type="ZHR_PAYSLIP_SRV.LeaveBal" Multiplicity="*" Role="ToRole_PayPeriodsToLeaveBals"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_PayPeriodsToLeaveBals">
+                        <PropertyRef Name="SeqNum"/>
+                        <PropertyRef Name="PersAssignNum"/>
+                    </Principal>
+                    <Dependent Role="ToRole_PayPeriodsToLeaveBals">
+                        <PropertyRef Name="SeqNum"/>
+                        <PropertyRef Name="PersAssignNum"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="PaystubPDFPaystub" sap:content-version="1">
+                <End Type="ZHR_PAYSLIP_SRV.PayPeriods" Multiplicity="1" Role="FromRole_PaystubPDFPaystub"/>
+                <End Type="ZHR_PAYSLIP_SRV.PDFPaystub" Multiplicity="1" Role="ToRole_PaystubPDFPaystub"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_PaystubPDFPaystub">
+                        <PropertyRef Name="SeqNum"/>
+                        <PropertyRef Name="PersAssignNum"/>
+                    </Principal>
+                    <Dependent Role="ToRole_PaystubPDFPaystub">
+                        <PropertyRef Name="SeqNum"/>
+                        <PropertyRef Name="PersAssignNum"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="PayPeriodsToPaySummary" sap:content-version="1">
+                <End Type="ZHR_PAYSLIP_SRV.PayPeriods" Multiplicity="*" Role="FromRole_PayPeriodsToPaySummary"/>
+                <End Type="ZHR_PAYSLIP_SRV.PaySummary" Multiplicity="*" Role="ToRole_PayPeriodsToPaySummary"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_PayPeriodsToPaySummary">
+                        <PropertyRef Name="SeqNum"/>
+                        <PropertyRef Name="PersAssignNum"/>
+                    </Principal>
+                    <Dependent Role="ToRole_PayPeriodsToPaySummary">
+                        <PropertyRef Name="SeqNum"/>
+                        <PropertyRef Name="PersAssignNum"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="ZHR_PAYSLIP_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="PaySummarySet" EntityType="ZHR_PAYSLIP_SRV.PaySummary" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="LeaveBalSet" EntityType="ZHR_PAYSLIP_SRV.LeaveBal" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="PayPeriodsSet" EntityType="ZHR_PAYSLIP_SRV.PayPeriods" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="MyPersAssignNumSet" EntityType="ZHR_PAYSLIP_SRV.MyPersAssignNum" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="PayDatesSet" EntityType="ZHR_PAYSLIP_SRV.PayDates" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="FinancialYrSet" EntityType="ZHR_PAYSLIP_SRV.FinancialYr" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="PDFPaystubSet" EntityType="ZHR_PAYSLIP_SRV.PDFPaystub" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <AssociationSet Name="PayPeriodsToLeaveBalsSet" Association="ZHR_PAYSLIP_SRV.PayPeriodsToLeaveBals" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="PayPeriodsSet" Role="FromRole_PayPeriodsToLeaveBals"/>
+                    <End EntitySet="LeaveBalSet" Role="ToRole_PayPeriodsToLeaveBals"/>
+                </AssociationSet>
+                <AssociationSet Name="PaystubPDFPaystubSet" Association="ZHR_PAYSLIP_SRV.PaystubPDFPaystub" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="PayPeriodsSet" Role="FromRole_PaystubPDFPaystub"/>
+                    <End EntitySet="PDFPaystubSet" Role="ToRole_PaystubPDFPaystub"/>
+                </AssociationSet>
+                <AssociationSet Name="PayPeriodsToPaySummarySet" Association="ZHR_PAYSLIP_SRV.PayPeriodsToPaySummary" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="PayPeriodsSet" Role="FromRole_PayPeriodsToPaySummary"/>
+                    <End EntitySet="PaySummarySet" Role="ToRole_PayPeriodsToPaySummary"/>
+                </AssociationSet>
+            </EntityContainer>
+            <atom:link
+                xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="./sap/ZHR_PAYSLIP_SRV/$metadata"/>
+                <atom:link
+                    xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="./sap/ZHR_PAYSLIP_SRV/$metadata"/>
+                </Schema>
+            </edmx:DataServices>
+        </edmx:Edmx>
