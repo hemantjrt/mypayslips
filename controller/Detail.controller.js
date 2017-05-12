@@ -179,7 +179,7 @@ sap.ui.define([
 
 		onOpenPSHelp: function() {
 
-			var newWindow = window.open("https://streamline.test.health.qld.gov.au/content/help/pay-adv-explained-allstaff.pdf", "_blank");
+			var newWindow = window.open("https://streamline.health.qld.gov.au/content/help/pay-adv-explained-allstaff.pdf", "_blank");
 
 			// set title window
 			newWindow.onload = jQuery.proxy(function() {
